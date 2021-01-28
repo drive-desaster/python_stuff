@@ -1,6 +1,6 @@
 #!/bin/bash
 # instalations scripte instalieren
-pacman -Sy arch-install-scripts
+pacman -Sy --needed arch-install-scripts
 
 echo "Bitte mounte alle gewünschten partitionen an der entsprechenden stelle(als root)"
 echo "du benötigst(für uefi) folgende partitionen(mit gdisk): "
@@ -14,7 +14,7 @@ cd $root
 
 #grundsystem + pakete instalieren instalieren
 read -p "zusätzliche pakete, die instaliert werden sollen jetzt eingeben( space seperatet):" pkg
-pacstrap $root -c -U base base-devel linux linux-firmware sudo nano vi vim dhcpcd bash-completion python $pkg
+pacstrap $root base base-devel linux linux-firmware sudo nano vi vim dhcpcd bash-completion python $pkg
 
 cd $root
 #fstab erstellen + anzeigen
@@ -42,7 +42,7 @@ arch-chroot $root mkinitcpio -p linux
 arch-chroot $root passwd
 read -p "instaliere jetzt grub, 64bit efi bootloader in $root/boot mit id $host, sollte das nicht gefallen, so beende das script jetzt(strg+C)"
 arch-chroot $root pacman -Sy grub efibootmgr os-prober
-arch-chroot $root grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=$host --recheck --debug --removable
+arch-chroot $root grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=$host --recheck --debug
 arch-chroot $root grub-mkconfig -o /boot/grub/grub.cfg
 
 #aushängen
