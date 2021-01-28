@@ -5,6 +5,8 @@ import os
 #import git
 import shutil
 
+os.mkdir('pkg')  #ordner pkg erstellen, in diesen werden später die packete verschoben
+
 #'config' file
 file = open("pks",'r')
 
